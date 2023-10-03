@@ -1,3 +1,6 @@
+import requests
+from django.http import HttpResponse
+
 from django.shortcuts import render
 
 from .models import Greeting
@@ -5,9 +8,12 @@ from .models import Greeting
 # Create your views here.
 
 
+#def index(request):
+#    return render(request, "index.html")
 def index(request):
-    return render(request, "index.html")
-
+    r = requests.get('https://httpbin.org/status/418')
+    print(r.text)
+    return HttpResponse('<pre>' + r.text + '</pre>')
 
 def db(request):
     # If you encounter errors visiting the `/db/` page on the example app, check that:
