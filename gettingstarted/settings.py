@@ -195,12 +195,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get('REDIS_URL'),
+        "LOCATION": os.environ.get("REDIS_URL"),  # RedisのURLを環境変数から読み込み
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {
-                "ssl_cert_reqs": None
-            },
         }
     }
 }
