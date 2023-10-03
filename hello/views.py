@@ -1,4 +1,5 @@
 import requests
+import os
 from django.http import HttpResponse
 
 from django.shortcuts import render
@@ -10,10 +11,14 @@ from .models import Greeting
 
 #def index(request):
 #    return render(request, "index.html")
+#def index(request):
+#    r = requests.get('https://httpbin.org/status/418')
+#    print(r.text)
+#    return HttpResponse('<pre>' + r.text + '</pre>')
 def index(request):
-    r = requests.get('https://httpbin.org/status/418')
-    print(r.text)
-    return HttpResponse('<pre>' + r.text + '</pre>')
+    times = int(os.environ.get('TIMES', 3))
+    return HttpResponse('Hello! ' * times)
+
 
 def db(request):
     # If you encounter errors visiting the `/db/` page on the example app, check that:
