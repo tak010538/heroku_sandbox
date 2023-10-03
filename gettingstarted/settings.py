@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 import secrets
+import redis
 from pathlib import Path
 
 import dj_database_url
