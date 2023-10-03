@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "hello",
+    "todoapp",
 ]
 
 MIDDLEWARE = [
@@ -203,3 +204,16 @@ CACHES = {
         }
     }
 }
+
+# Set the authentication backend to use 'ModelBackend' for login
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# Set the URL for login
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/todoapp/'
+
+# Use Redis for session storage
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
