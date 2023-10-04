@@ -29,5 +29,12 @@
         <input type="text" id="task" name="task" required>
         <button type="submit">追加</button>
     </form>
+
+    <!-- ログアウトボタン -->
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">ログアウト</button>
+    </form>
+
 </body>
 </html>

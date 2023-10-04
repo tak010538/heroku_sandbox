@@ -1,6 +1,6 @@
 # todoapp/views.py
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import TodoItem
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
@@ -29,15 +29,11 @@ def add_todo(request):
         form = TodoItemForm()
     return render(request, 'todoapp/todo_list.html', {'form': form})  # フォームをToDoリスト画面に表示
 
-@login_required(login_url='/todos/')  # delete_todo ビューにのみ追加
+@login_required(login_url='/todos/')
 def delete_todo(request, todo_id):
-    # タスクを削除
-    try:
-        todo_item = TodoItem.objects.get(id=todo_id, user=request.user)
-        todo_item.delete()
-    except TodoItem.DoesNotExist:
-        pass
-    return redirect('todo_list')  # ToDoリスト画面にリダイレクト
+    todo = get_object_or_404(TodoItem, pk=todo_id, user=request.user)
+    todo.delete()
+    return redirect('todo_list')
 
 @login_required  # logout_view ビューからは削除
 def logout_view(request):
