@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import TodoItemForm 
+from django.contrib.auth import logout
 
 
 @login_required
@@ -26,5 +27,20 @@ def add_todo(request):
             return redirect('todo_list')  # ToDoリスト画面にリダイレクト
     else:
         form = TodoItemForm()
-    return render(request, 'todo_list', {'form': form})
+    return render(request, 'todoapp/todo_list.html', {'form': form})  # フォームをToDoリスト画面に表示
 
+@login_required(login_url='/todos/')  # delete_todo ビューにのみ追加
+def delete_todo(request, todo_id):
+    # タスクを削除
+    try:
+        todo_item = TodoItem.objects.get(id=todo_id, user=request.user)
+        todo_item.delete()
+    except TodoItem.DoesNotExist:
+        pass
+    return redirect('todo_list')  # ToDoリスト画面にリダイレクト
+
+@login_required  # logout_view ビューからは削除
+def logout_view(request):
+    # ログアウト処理
+    logout(request)
+    return redirect('login')  # ログインページにリダイレクト
