@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo List</title>
+    <style>
+        /* 削除ボタンのスタイル */
+        .delete-button {
+            margin-left: 10px; /* タスクの右側に余白を追加 */
+            vertical-align: middle; /* 垂直方向の中央揃え */
+        }
+    </style>
 </head>
 <body>
     <h1>{{ user_name }}さん、ようこそ</h1>  <!-- ユーザ名を表示 -->
@@ -14,7 +21,7 @@
                 {{ todo.task }}
                 <form method="post" action="{% url 'delete_todo' todo.id %}">
                     {% csrf_token %}
-                    <button type="submit">削除</button>
+                    <button type="submit" class="delete-button">削除</button>
                 </form>
             </li>
         {% empty %}
