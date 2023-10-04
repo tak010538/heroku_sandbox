@@ -14,7 +14,7 @@ def todo_list(request):
     user_name = request.user.username  # ユーザ名を取得
     return render(request, 'todoapp/todo_list.html', {'todos': todos, 'user_name': user_name})
 
-@login_required
+@login_required(login_url='/todos/')
 def add_todo(request):
     if request.method == 'POST':
         form = TodoItemForm(request.POST)
