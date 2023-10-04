@@ -6,7 +6,8 @@
     <title>ToDo List</title>
 </head>
 <body>
-    <h1>ToDo List</h1>
+    <h1>{{ user_name }}さん、ようこそ</h1>  <!-- ユーザ名を表示 -->
+    <h2>ToDo List</h2>
     <ul>
         {% for todo in todos %}
             <li>{{ todo }}</li>
@@ -14,5 +15,13 @@
             <li>No tasks available.</li>
         {% endfor %}
     </ul>
+
+    <!-- ToDoアイテムを登録するフォーム -->
+    <form method="post" action="{% url 'add_todo' %}">
+        {% csrf_token %}
+        <label for="task">新しいタスク:</label>
+        <input type="text" id="task" name="task" required>
+        <button type="submit">追加</button>
+    </form>
 </body>
 </html>
