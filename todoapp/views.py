@@ -26,5 +26,5 @@ def add_todo(request):
             return redirect('todo_list')  # ToDoリスト画面にリダイレクト
     else:
         form = TodoItemForm()
-    return render(request, 'todoapp/add_todo.html', {'form': form})
+    return render(request, 'todo_list', {'form': form})
 
