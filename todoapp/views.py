@@ -5,6 +5,7 @@ from .models import TodoItem
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from .forms import TodoItemForm 
 
 
 @login_required
@@ -15,6 +16,14 @@ def todo_list(request):
 
 def add_todo(request):
     if request.method == 'POST':
-        task = request.POST['task']
-        TodoItem.objects.create(user=request.user, task=task, completed=False)
-    return HttpResponseRedirect(reverse('todo_list'))
+        form = TodoItemForm(request.POST)
+        if form.is_valid():
+            # フォームが有効な場合、ToDoアイテムを保存
+            todo_item = form.save(commit=False)
+            todo_item.user = request.user
+            todo_item.save()
+            return redirect('todo_list')  # ToDoリスト画面にリダイレクト
+    else:
+        form = TodoItemForm()
+    return render(request, 'todoapp/add_todo.html', {'form': form})
+
